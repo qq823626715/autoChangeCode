@@ -1,3 +1,8 @@
+/*
+ * @Date: 2021-03-25 15:14:54
+ * @LastEditors: LiuShengRong
+ * @LastEditTime: 2021-07-19 16:55:51
+ */
 /**
  * @description 国际化，自动化配置
  * @param {String} projectPath 需要替换的的项目文件夹
@@ -6,11 +11,9 @@
  * @param {Array} fileType 需要替换的文件类型
  */
 const setting = {
-    projectPath: 'D:/Workspace/YiLianZhong/person-service-mall/src',
-    // projectPath: './demo',
-    projectName: '门户网厅src',
-    zhLangFilePath: 'D:/Workspace/YiLianZhong/person-service-mall/src/assets/js/lang/zh.js',
-    // zhLangFilePath: './demo/zh.js',
+    projectPath: 'D:/Workspace/YiLianZhong/nodeRelace/demo',
+    projectName: 'Demo',
+    zhLangFilePath: 'D:/Workspace/YiLianZhong/hsa-pss-cw-nation/src/assets/js/lang/zh.js',
     fileType: ['.vue'],
 }
 

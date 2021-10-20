@@ -57,7 +57,7 @@ function doubleObjExchangeKeyValue() {
 function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
   // exchangeKeyValue()
   // doubleObjExchangeKeyValue()
-  console.log("********zh.js文件转换完成**********");
+  // console.log("********zh.js文件转换完成**********");
   const filesList = []
   // 递归读取文件
   function readFileList(directory, useSubdirectories, extList) {

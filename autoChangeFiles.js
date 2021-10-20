@@ -57,7 +57,6 @@ function doubleObjExchangeKeyValue() {
 function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
   // exchangeKeyValue()
   // doubleObjExchangeKeyValue()
-  console.log("********zh.js文件转换完成**********");
   const filesList = []
   // 递归读取文件
   function readFileList(directory, useSubdirectories, extList) {
@@ -77,7 +76,7 @@ function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
   readFileList(directory, useSubdirectories, extList)
   console.log("********递归文件读取完成**********");
   // 生成需要的对象
-  const res = filesList.map((item, index) => {
+  filesList.forEach((item, index) => {
     let fileName = item
     modifyLog.push('-------------------------\n\nfileName：' + fileName + '\n\n')
     //获取文件内容
@@ -140,7 +139,6 @@ function changFileContent(content, elementFlag, { type, reg1, reg2, changeConten
         } else {
           prefix = originContent.slice(0,1)
         }
-        
       }
 
       let chineseContent = ""
@@ -150,8 +148,6 @@ function changFileContent(content, elementFlag, { type, reg1, reg2, changeConten
         chineseContent = originContent.match(reg1)[0].trim().replace(reg2, "").trim()
       }
       const i18nKey = getI18nKey(chineseContent, zhlangObj)
-      console.log(chineseContent)
-      console.log(i18nKey)
       if (i18nKey) {
         content = content.replace(originContent, (target) => {
           const newText = changeContent(i18nKey, prefix)
