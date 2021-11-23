@@ -1,11 +1,10 @@
 /**
- * @description: 替换中文
- * @param {*}
- * @return {*}
- * @author: LiuShengrong
- * @time 2021-03-22
+ * @Author: LiuShengRong
+ * @Date: 2021-03-22 03:02:01
+ * @LastEditTime: 2021-10-20 10:37:53
+ * @LastEditors: LiuShengRong
+ * @Description: 替换中文
  */
-
 const path = require('path')
 const fs = require('fs')
 const { projectPath, zhLangFilePath, fileType, projectName } = require("./settings")
