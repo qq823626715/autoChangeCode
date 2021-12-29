@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-03-25 15:14:54
  * @LastEditors: LiuShengRong
- * @LastEditTime: 2021-11-03 18:09:53
+ * @LastEditTime: 2021-11-23 09:44:45
  */
 /**
  * @description 国际化，自动化配置
@@ -11,9 +11,9 @@
  * @param {Array} fileType 需要替换的文件类型
  */
 const setting = {
-    projectPath: 'E:/Workspace/YiLianZhong/qinghai/hsa-pss-local-qhytj',
-    projectName: 'qhytj',
-    zhLangFilePath: 'E:/Workspace/YiLianZhong/qinghai/hsa-pss-local-qhytj/src/assets/lang/zh.js',
+    projectPath: 'E:/Workspace/YiLianZhong/xizang/xz-hallenter/src',
+    projectName: 'xz-hall',
+    zhLangFilePath: 'E:/Workspace/YiLianZhong/xizang/xz-hallenter/src/assets/lang/zh.js',
     fileType: ['.vue'],
 }
 

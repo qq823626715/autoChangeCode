@@ -14,6 +14,7 @@ const langObj = {} // 反转zhlangObj对象
 //获取文件的具体信息
 const getPathInfo = p => path.parse(p)
 let modifyLog = []
+let contentLog = []
 let modifyFileNum = 0
 let modifyContentNum = 0
 
@@ -77,7 +78,6 @@ function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
   // 生成需要的对象
   filesList.forEach((item, index) => {
     let fileName = item
-    modifyLog.push('-------------------------\n\nfileName：' + fileName + '\n\n')
     //获取文件内容
     let fileContent = fs.readFileSync(item, 'utf8')
     // 对文本进行切割，分为 <template></template>模块，以及<script></script>模块
@@ -98,6 +98,11 @@ function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
     fileContent = fileContent.replace(scriptRge, () => {
       return scriptContent
     })
+    if(contentLog.length > 0) {
+      modifyLog.push('-------------------------\n\nfileName：' + fileName + '\n\n')
+      modifyLog.push(...contentLog)
+      contentLog = []
+    }
 
     fs.writeFile(item, fileContent, function (err) {
       if (err) {
@@ -150,7 +155,7 @@ function changFileContent(content, elementFlag, { type, reg1, reg2, changeConten
       if (i18nKey) {
         content = content.replace(originContent, (target) => {
           const newText = changeContent(i18nKey, prefix)
-          modifyLog.push(target + ' => ' + newText + '\n')
+          contentLog.push(target + ' => ' + newText + '\n')
           return newText
         })
       }
