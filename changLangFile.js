@@ -1,9 +1,10 @@
 const path = require('path')
 const fs = require('fs')
 
-const filePath = "D:/Workspace/YiLianZhong/person-service-mall/src/assets/js/lang/ti.js"
-const zhlangObj = require("D:/Workspace/YiLianZhong/hsa-pss-cw-nation/src/assets/js/lang/zh.js")
-const tilangObj = require("D:/Workspace/YiLianZhong/hsa-pss-cw-nation/src/assets/js/lang/ti.js")
+// const filePath = "D:/Workspace/YiLianZhong/person-service-mall/src/assets/js/lang/ti.js"
+const zhlangObj = require("E:/Workspace/YiLianZhong/qinghai/pw/src/assets/js/lang/zh.js")
+// const newZhlang = require("E:/Workspace/YiLianZhong/nodeRelace/log/zh.js")
+// const tilangObj = require("D:/Workspace/YiLianZhong/hsa-pss-cw-nation/src/assets/js/lang/ti.js")
 
 function changFile() {
     let fileContent = fs.readFileSync(filePath, 'utf8')
@@ -51,30 +52,40 @@ function getTiValue(i18nKey) {
     }
     
 }
-
+let log = ''
 function quchong() {
-    let fileContent = fs.readFileSync('./demo/chinese.txt', 'utf8')
-    let yifanyi = fs.readFileSync('./demo/yifanyi.txt', 'utf8')
-    const weifanyiArray = fileContent.split(',').map(item => {
-        return item.replace('\r\n', '')
-    })
-    const yifanyiArray = yifanyi.split(',').map(item => {
-        return item.replace('\r\n', '')
-    })
-    let yiSet = new Set(yifanyiArray)
-    let chongdieArray = []
-    let noChongdieArray = []
-    weifanyiArray.forEach(item => {
-        if(yiSet.has(item)) {
-            chongdieArray.push(item)
-        } else {
-            noChongdieArray.push(item)
-        }
-    })
-    console.log(noChongdieArray)
-    console.log(chongdieArray)
+  const filterList = new Set()
+  const keyList = Object.keys(zhlangObj)
+  keyList.forEach(key => {
+    if(filterList.has(zhlangObj[key])) {
+      log += `删除   ${key}:${zhlangObj[key]}\n`
+      delete zhlangObj[key];
+    } else {
+      filterList.add(zhlangObj[key])
+    }
+  })
+  createChageLog()
 }
+/**
+ * @description 根据modifyLog生成日志
+ */
+function createChageLog() {
 
+  const logPath = './log/zh_new.js'
+  let logContent = "module.exports = " + JSON.stringify(zhlangObj)
+  fs.writeFile(path.join(__dirname, logPath), logContent, 'utf8', (err) => {
+    if (err) {
+    return console.error(err);
+    }
+    console.log("--------zh.js成功-----------")
+  })
+  fs.writeFile(path.join(__dirname, './log/zh_log.txt'), log, 'utf8', (err) => {
+    if (err) {
+    return console.error(err);
+    }
+    console.log("--------zh_log.txt成功-----------")
+  })
+}
 /**
  * @description 读取ti文件内，未翻译的中文
  */
@@ -91,6 +102,4 @@ function readUntranslatedTi() {
     })
 }
 
-// changFile()
-// quchong()
-readUntranslatedTi()
+quchong()
