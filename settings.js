@@ -11,9 +11,9 @@
  * @param {Array} fileType 需要替换的文件类型
  */
 const setting = {
-    projectPath: 'E:/Workspace/YiLianZhong/xizang/xz-hallenter/src',
-    projectName: 'xz-hall',
-    zhLangFilePath: 'E:/Workspace/YiLianZhong/xizang/xz-hallenter/src/assets/lang/zh.js',
+    projectPath: 'E:/Workspace/YiLianZhong/qinghai/cw/src',
+    projectName: 'qh-cw未翻译中文',
+    zhLangFilePath: 'E:/Workspace/YiLianZhong/qinghai/cw/src/assets/js/lang/zh.js',
     fileType: ['.vue'],
 }
 
