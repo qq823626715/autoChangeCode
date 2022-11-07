@@ -39,6 +39,12 @@ const changeRules = {
     changeContent: function(keyContent) {
       return `this.$t('${keyContent}')`
     }
+  },
+  // 匹配采用:label的表格表头
+  tableHeaderLabelRule: {
+    type: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)\/?>/g,
+    reg1: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)\/>/g,
+    reg2: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)>/g,
   }
 }
 

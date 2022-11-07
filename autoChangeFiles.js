@@ -1,14 +1,15 @@
 /**
  * @Author: LiuShengRong
  * @Date: 2021-03-22 03:02:01
- * @LastEditTime: 2021-10-20 10:37:53
- * @LastEditors: LiuShengRong
+ * @LastEditTime: 2022-11-07 13:43:14
+ * @LastEditors: Please set LastEditors
  * @Description: 替换中文
  */
 const path = require('path')
 const fs = require('fs')
 const { projectPath, zhLangFilePath, fileType, projectName } = require("./settings")
 const changeRules = require("./rules")
+const fnModifyI18n = require("./doubleLangDisplayDirector")
 const zhlangObj = require(zhLangFilePath)
 const langObj = {} // 反转zhlangObj对象
 //获取文件的具体信息
@@ -55,8 +56,6 @@ function doubleObjExchangeKeyValue() {
  *
  */
 function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
-  // exchangeKeyValue()
-  // doubleObjExchangeKeyValue()
   const filesList = []
   // 递归读取文件
   function readFileList(directory, useSubdirectories, extList) {
@@ -77,45 +76,55 @@ function autoLoadFile(directory, useSubdirectories = false, extList = ['.js']) {
   console.log("********递归文件读取完成**********");
   // 生成需要的对象
   filesList.forEach((item, index) => {
-    let fileName = item
-    //获取文件内容
-    let fileContent = fs.readFileSync(item, 'utf8')
-    // 对文本进行切割，分为 <template></template>模块，以及<script></script>模块
-    const tempRge = new RegExp(/(?<=<template>)(.|\n|\r)*(?=<\/template>)/g)
-    const scriptRge = new RegExp(/(?<=<script>)(.|\n|\r)*(?=<\/script>)/g)
-    const tempContets = fileContent.match(tempRge)
-    const scriptContets = fileContent.match(scriptRge)
-    let templateContent = tempContets && tempContets.length > 0 ? tempContets[0] : ''
-    let scriptContent = scriptContets && scriptContets.length > 0 ? scriptContets[0] : ''
-    // 针对不模块内容，调用不同模块规则替换
-    templateContent = changFileContent(templateContent, 'template', changeRules.attrRule)
-    templateContent = changFileContent(templateContent, 'template', changeRules.contentRule)
-    scriptContent = changFileContent(scriptContent, 'script', changeRules.scriptRule)
-    // 解决文本中含有 $1 等特殊replace文本时bug
-    fileContent = fileContent.replace(tempRge, () => {
-      return templateContent
-    })
-    fileContent = fileContent.replace(scriptRge, () => {
-      return scriptContent
-    })
-    if(contentLog.length > 0) {
-      modifyLog.push('-------------------------\n\nfileName：' + fileName + '\n\n')
-      modifyLog.push(...contentLog)
-      contentLog = []
-    }
-
-    fs.writeFile(item, fileContent, function (err) {
-      if (err) {
-        return console.error(err);
-      }
-      console.log(item + "文件替换完成！");
-    })
+    // fnModifyCodeFile(item)
+    console.log(index)
+    fnModifyI18n(item, modifyLog)
   })
   createChageLog()
 }
 
 /**
- * @description 替换修改文件内容，并返回修改后的文件内容
+ * @description: 中文替换成藏文的文件处理函数
+ * @return {*}
+ */
+function fnModifyCodeFile(item) {
+  let fileName = item
+  //获取文件内容
+  let fileContent = fs.readFileSync(item, 'utf8')
+  // 对文本进行切割，分为 <template></template>模块，以及<script></script>模块
+  const tempRge = new RegExp(/(?<=<template>)(.|\n|\r)*(?=<\/template>)/g)
+  const scriptRge = new RegExp(/(?<=<script>)(.|\n|\r)*(?=<\/script>)/g)
+  const tempContets = fileContent.match(tempRge)
+  const scriptContets = fileContent.match(scriptRge)
+  let templateContent = tempContets && tempContets.length > 0 ? tempContets[0] : ''
+  let scriptContent = scriptContets && scriptContets.length > 0 ? scriptContets[0] : ''
+  // 针对不模块内容，调用不同模块规则替换
+  templateContent = changFileContent(templateContent, 'template', changeRules.attrRule)
+  templateContent = changFileContent(templateContent, 'template', changeRules.contentRule)
+  scriptContent = changFileContent(scriptContent, 'script', changeRules.scriptRule)
+  // 解决文本中含有 $1 等特殊replace文本时bug
+  fileContent = fileContent.replace(tempRge, () => {
+    return templateContent
+  })
+  fileContent = fileContent.replace(scriptRge, () => {
+    return scriptContent
+  })
+  if(contentLog.length > 0) {
+    modifyLog.push('-------------------------\n\nfileName：' + fileName + '\n\n')
+    modifyLog.push(...contentLog)
+    contentLog = []
+  }
+
+  fs.writeFile(item, fileContent, function (err) {
+    if (err) {
+      return console.error(err);
+    }
+    console.log(item + "文件替换完成！");
+  })
+}
+
+/**
+ * @description 替换修改文件内容，并返回修改后的文件内容 适用于中文替换成i18n
  * @param {String} content 文件模块内容
  * @param {String} elementFlag 模块标签标志 标识当前文本属于哪个模块 template 或script
  *  包含替换的各种规则以及切割标志 sliceFlag，用于标识前缀用“=”或“:”切割
