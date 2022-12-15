@@ -42,9 +42,24 @@ const changeRules = {
   },
   // 匹配采用:label的表格表头
   tableHeaderLabelRule: {
-    type: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)\/?>/g,
-    reg1: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)\/>/g,
-    reg2: /( *)(<el-table-column\s[^/>]*):label="\$t\('(lang\d+)'\)"([^/>]*)>/g,
+    type: /( *)(<el-table-column\s[^/>]*):label="\$t\('([\d\w.]+)'\)"([^/>]*)\/?>/g,
+    reg1: /( *)(<el-table-column\s[^/>]*):label="\$t\('([\d\w.]+)'\)"([^/>]*)\/>/g,
+    reg2: /( *)(<el-table-column\s[^/>]*):label="\$t\('([\d\w.]+)'\)"([^/>]*)>/g,
+  },
+  // 匹配采用:label的form item
+  formItemLabelRule: {
+    type: /( *)(<el-form-item[^>]*\n*):label="\$t\('([\d\w.]+)'\)"([^>]*\n*)>/g,
+  },
+  // 匹配采用: {{ ***  }}</el-button>中的 {{ *** }}
+  buttonRule: {
+    type: /\{\{\s*\$t\((?:"|')([\d\w.]+)(?:"|')\)\s*\}\}(?=[\s\n]*<\/el-button[\s\n]*>)/g
+  },
+  buttonRule: {
+    type: /\{\{\s*\$t\((?:"|')([\d\w.]+)(?:"|')\)\s*\}\}(?=[\s\n]*<\/el-button[\s\n]*>)/g
+  },
+  titleRule: {
+    // type: /(?<=<ybj-title)[\s\n\w\d"'\-:=_]+:content=(?:"|')(\$t\((?:"|')([\d\w.]+)(?:"|')\))(?:"|')/g
+    type: /(?<=<ybj-title)([^/>]+:content=(?:"|'))(\$t\((?:"|')([\d\w.]+)(?:"|')\))("|')/g
   }
 }
 

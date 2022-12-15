@@ -11,9 +11,9 @@
  * @param {Array} fileType 需要替换的文件类型
  */
 const setting = {
-    projectPath: 'E:/Workspace/YiLianZhong/qinghai/yyzzjqd/src',
-    projectName: '医疗一体机语言替换log',
-    zhLangFilePath: 'E:/Workspace/YiLianZhong/qinghai/yyzzjqd/src/assets/lang/zh.js',
+    projectPath: 'E:/Workspace/YiLianZhong/qinghai/cw/src',
+    projectName: '单位网厅双语同步',
+    zhLangFilePath: 'E:/Workspace/YiLianZhong/qinghai/cw/src/assets/js/lang/zh.js',
     fileType: ['.vue'],
 }
 
